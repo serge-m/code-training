@@ -1,6 +1,9 @@
 // 14. Longest Common Prefix
 // Easy
-// Fatty solution storing all the prefixes in a Hashmap
+// 
+// Faster solution
+// Runtime: 0 ms, faster than 100.00% of Rust online submissions for Longest Common Prefix.
+// Memory Usage: 2.1 MB, less than 79.84% of Rust online submissions for Longest Common Prefix.
 
 use std::{collections::HashMap};
 
@@ -8,13 +11,18 @@ use std::{collections::HashMap};
 impl Solution {
     pub fn longest_common_prefix(strs: Vec<String>) -> String {
         let mut prefix_counter: HashMap<String, usize> = HashMap::new();
-        
         for s in strs.iter() {
             // println!("{}", s);
             for (i, _) in s.chars().enumerate() {
-                let prefix = String::from(&s[..i+1]);
-                let count = prefix_counter.entry(prefix).or_insert(0);
-                *count += 1
+                let prefix = &s[..i+1];
+                match prefix_counter.get_mut(prefix) {
+                    Some(x) => {
+                        *x += 1;
+                    }
+                    None => {
+                        prefix_counter.insert(prefix.to_owned(), 1);
+                    }
+                }
             }
         }
         let mut best_string = String::from("");
