@@ -20,7 +20,7 @@ impl Solution {
                         *x += 1;
                     }
                     None => {
-                        prefix_counter.insert(prefix.to_owned(), 1);
+                        prefix_counter.insert(prefix.to_string(), 1);
                     }
                 }
             }
